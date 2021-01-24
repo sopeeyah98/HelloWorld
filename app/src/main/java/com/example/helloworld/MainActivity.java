@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // handle what happens after I click
+                //sayHello(v);
                 sayHello(v);
             }
         });
@@ -76,4 +78,7 @@ public class MainActivity extends AppCompatActivity {
             textView_count.setText(Integer.toString(number));
         }
     }
+
+
+
 }

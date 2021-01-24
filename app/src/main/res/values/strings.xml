@@ -5,4 +5,5 @@
     <string name="button_countDown">Count down</string>
     <string name="textView_count">0</string>
     <string name="toast_message">Hello!</string>
+
 </resources>
