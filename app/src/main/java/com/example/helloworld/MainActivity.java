@@ -1,5 +1,6 @@
 package com.example.helloworld;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -84,8 +85,37 @@ public class MainActivity extends AppCompatActivity {
     public void launchNextActivity(View view){
         // create an intent and you need to specify from and to
         Intent intent = new Intent(this, SecondActivity.class);
-        startActivity(intent);
 
+        // data field
+        // intent extras -> Celia's choice
+        // both can pack data and send to the targeted activity
+
+        // intent extras:
+        // key/value pairs in a Bundle
+
+        // i want to pass the count number through intent to second activity and display in second activity
+        // 5 was passed.
+
+        String message = textView_count.getText().toString();
+        intent.putExtra("count", message);
+
+        //startActivity(intent);
+        startActivityForResult(intent, 1); // <0 -> reply is not requested
     }
 
+    // do something when the result is received
+    // a lifecycle method
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1){
+            if (resultCode == RESULT_OK){
+                String reply = data.getStringExtra("replyCount");
+                textView_count.setText(reply);
+            }
+        }
+    }
 }
