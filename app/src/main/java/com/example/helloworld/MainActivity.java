@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // handle what happens after I click
                 //sayHello(v);
-                sayHello(v);
+                //sayHello(v);
+                launchNextActivity(v);
             }
         });
         // when click happens, I do something
@@ -80,5 +81,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void launchNextActivity(View view){
+        // create an intent and you need to specify from and to
+        Intent intent = new Intent(this, SecondActivity.class);
+        startActivity(intent);
+
+    }
 
 }
