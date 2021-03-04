@@ -3,7 +3,9 @@ package com.example.helloworld;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button_hi;
     private int number = 0;
     private TextView textView_count;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // links the activity to the xml layout called activity_main
 
+        sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         // look up the button by its id
 
         button_hi = findViewById(R.id.button_hello);
@@ -46,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
                 // handle what happens after I click
                 //sayHello(v);
                 //sayHello(v);
+                // add count to shared preferences
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                int count = Integer.parseInt(textView_count.getText().toString());
+                editor.putInt("count", count);
+                editor.apply();
                 launchNextActivity(v);
             }
         });
@@ -96,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
         // i want to pass the count number through intent to second activity and display in second activity
         // 5 was passed.
 
-        String message = textView_count.getText().toString();
-        intent.putExtra("count", message);
+        //String message = textView_count.getText().toString();
+        //intent.putExtra("count", message);
 
-        //startActivity(intent);
-        startActivityForResult(intent, 1); // <0 -> reply is not requested
+        startActivity(intent);
+        //startActivityForResult(intent, 1); // <0 -> reply is not requested
     }
 
     // do something when the result is received

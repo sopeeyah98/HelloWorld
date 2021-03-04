@@ -1,6 +1,8 @@
 package com.example.helloworld;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +27,8 @@ public class SecondActivity extends AppCompatActivity {
     private ConstraintLayout constraintLayout;
     private LinearLayout linearLayout;
     private Button button_goBack;
-    private String receivedMessage;
-
+    //private String receivedMessage;
+    private SharedPreferences sharedPreferences;
 
     private static final String api_url = "https://icanhazdadjoke.com/";
     private static AsyncHttpClient client = new AsyncHttpClient();
@@ -40,9 +42,12 @@ public class SecondActivity extends AppCompatActivity {
         // x was passed from main activity.
 
         // extract intent extras information
-        Intent intent = getIntent();
+        //Intent intent = getIntent();
 
-        receivedMessage = intent.getStringExtra("count");
+        //receivedMessage = intent.getStringExtra("count");
+        // get data from shared preferences
+        sharedPreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        int count = sharedPreferences.getInt("count", 0);
         //Log.d("Data from Main Activity", receivedMessage);
 
         // grab the constraintLayout in second activity
@@ -61,7 +66,7 @@ public class SecondActivity extends AppCompatActivity {
          */
         // if you do not know how many views you will need to create
 
-            for (int i = 0; i < Integer.parseInt(receivedMessage); i++) {
+            for (int i = 0; i < count; i++) {
                 TextView textView = new TextView(this);
                 textView.setText("hello");
                 linearLayout.addView(textView);
@@ -105,8 +110,10 @@ public class SecondActivity extends AppCompatActivity {
                     JSONObject json = new JSONObject(new String(responseBody));
                     Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
                     // add the joke into the intent
-                    intent.putExtra("joke", json.getString("joke"));
-
+                    //intent.putExtra("joke", json.getString("joke"));
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("joke", json.getString("joke"));
+                    editor.apply();
                     // convert any json data into a string to put into the intent
                     // when you receive the intent in the next activity,
                     // convert it back to the json data
